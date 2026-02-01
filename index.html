@@ -1,65 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For Simran ❤️</title>
-<style>
-body {
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-background: linear-gradient(135deg, #ffe6f0, #fff);
-font-family: 'Segoe UI', sans-serif;
-text-align: center;
-}
+  <meta charset="UTF-8">
+  <title>Habibi Forever 💖</title>
 
-h1 {
-font-size: 2.2em;
-color: #c2185b;
-margin-bottom: 10px;
-}
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-p {
-font-size: 1.4em;
-margin-bottom: 30px;
-color: #444;
-}
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffd1dc, #fff);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding-top: 80px;
+      overflow: hidden;
+    }
 
-button {
-padding: 15px 25px;
-margin: 10px;
-font-size: 1em;
-border: none;
-border-radius: 25px;
-cursor: pointer;
-background-color: #ff5c8d;
-color: white;
-transition: transform 0.2s, background 0.2s;
-}
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
 
-button:hover {
-background-color: #e91e63;
-transform: scale(1.05);
-}
-</style>
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+      margin-right: 20px;
+      font-size: 1.4rem;
+    }
+
+    #noBtn {
+      background-color: #aaa;
+      color: white;
+      position: absolute;
+    }
+
+    /* Hidden YouTube iframe */
+    #music {
+      display: none;
+    }
+  </style>
 </head>
-<body>
 
-<div>
-<h1>Assalam walaykum Simran</h1>
-<p>Will you be my habibi forever?? 💖</p>
+<body onclick="startMusic()">
 
-<button onclick="openGif()">Alhamdulillah qubool hai</button>
-<button onclick="openGif()">A thousand times yes</button>
-</div>
+  <h1>Assalam walaykum Simran 💕</h1>
+  <p>Will you be my habibi forever??</p>
 
-<script>
-function openGif() {
-window.location.href = "https://giphy.com/gifs/wedding-bride-groom-UmKqspZgCg0kUYzCLw";
-}
-</script>
+  <button id="yesBtn" class="btn" onclick="yesClicked()">
+    Alhamdulillah qubool hai
+  </button>
+
+  <button id="noBtn" class="btn" onmouseover="moveNo()">
+    NO too soon
+  </button>
+
+  <!-- Hidden YouTube audio -->
+  <iframe
+    id="music"
+    src="https://www.youtube.com/embed/5DdKSg5wDN8?autoplay=1&mute=1&loop=1&playlist=5DdKSg5wDN8"
+    allow="autoplay">
+  </iframe>
+
+  <script>
+    let scale = 1;
+    let musicStarted = false;
+
+    function yesClicked() {
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+      alert("She said YES 💍❤️");
+    }
+
+    function moveNo() {
+      const noBtn = document.getElementById("noBtn");
+      const yesBtn = document.getElementById("yesBtn");
+
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 150);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+
+      // Grow YES button gradually
+      scale += 0.08;
+      yesBtn.style.transform = `scale(${scale})`;
+    }
+
+    function startMusic() {
+      if (!musicStarted) {
+        const iframe = document.getElementById("music");
+        iframe.src = iframe.src.replace("mute=1", "mute=0");
+        musicStarted = true;
+      }
+    }
+  </script>
 
 </body>
 </html>
-
