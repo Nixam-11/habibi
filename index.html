@@ -1,179 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Habibi Forever 💖</title>
+<script>
+  let scale = 1;
+  let musicStarted = false;
+  let effectStarted = false;
+  let noClickCount = 0;
 
-  <!-- Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  function yesClicked() {
+    if (effectStarted) return;
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ffd1dc, #fff);
-      font-family: system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      overflow: hidden;
-      padding: 20px;
+    alert("Say Bismillah first 🤍");
+
+    effectStarted = true;
+
+    // Start music
+    if (!musicStarted) {
+      document.getElementById("music").src += "&autoplay=1";
+      musicStarted = true;
     }
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
+    // Confetti
+    confetti({
+      particleCount: 250,
+      spread: 130,
+      origin: { y: 0.6 }
+    });
 
-    p {
-      font-size: 1.3rem;
-      margin-bottom: 30px;
-    }
+    // Floating text for 10 seconds
+    const interval = setInterval(createFloatingText, 400);
+    setTimeout(() => clearInterval(interval), 10000);
+  }
 
-    .buttons {
-      position: relative;
-      width: 100%;
-      height: 220px;
-    }
+  function createFloatingText() {
+    const text = document.createElement("div");
+    text.className = "floating-text";
+    text.innerText = "Inshallah we will be one ❤️❤️❤️";
 
-    button {
-      padding: 14px 26px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      touch-action: manipulation;
-    }
+    const x = Math.random() * (window.innerWidth - 220);
+    const y = Math.random() * (window.innerHeight - 60);
 
-    #yesBtn {
-      background: #ff4d6d;
-      color: white;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-    }
+    text.style.left = x + "px";
+    text.style.top = y + "px";
 
-    #noBtn {
-      background: #aaa;
-      color: white;
-      position: absolute;
-      left: 50%;
-      top: 90px;
-      transform: translateX(-50%);
-      z-index: 1;
-    }
+    document.body.appendChild(text);
+    setTimeout(() => text.remove(), 3000);
+  }
 
-    .floating-text {
-      position: absolute;
-      font-size: 1.5rem;
-      color: #ff2f68;
-      animation: fadeOut 3s ease forwards;
-      pointer-events: none;
-    }
+  function moveNo() {
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
 
-    @keyframes fadeOut {
-      0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(1.4); }
-    }
-
-    iframe {
-      display: none;
-    }
-  </style>
-</head>
-
-<body>
-
-  <h1>Assalam walaykum Simran 💕</h1>
-  <p>Will you be my habibi forever??</p>
-
-  <div class="buttons">
-    <button id="yesBtn" onclick="yesClicked()">
-      Alhamdulillah qubool hai
-    </button>
-
-    <button id="noBtn" ontouchstart="moveNo()" onmouseover="moveNo()">
-      NO too soon
-    </button>
-  </div>
-
-  <!-- Hidden YouTube audio -->
-  <iframe
-    id="music"
-    src="https://www.youtube.com/embed/5DdKSg5wDN8?enablejsapi=1&loop=1&playlist=5DdKSg5wDN8"
-    allow="autoplay">
-  </iframe>
-
-  <script>
-    let scale = 1;
-    let musicStarted = false;
-    let effectStarted = false;
-
-    function yesClicked() {
-      if (effectStarted) return;
-
-      alert("Say Bismillah first 🤍");
-
-      effectStarted = true;
-
-      // Start music
-      if (!musicStarted) {
-        document.getElementById("music").src += "&autoplay=1";
-        musicStarted = true;
-      }
-
-      // Confetti
-      confetti({
-        particleCount: 250,
-        spread: 130,
-        origin: { y: 0.6 }
-      });
-
-      // Floating text for 10 seconds
-      const interval = setInterval(createFloatingText, 400);
-
-      setTimeout(() => {
-        clearInterval(interval);
-      }, 10000);
-    }
-
-    function createFloatingText() {
-      const text = document.createElement("div");
-      text.className = "floating-text";
-      text.innerText = "Inshallah we will be one ❤️❤️❤️";
-
-      const x = Math.random() * (window.innerWidth - 200);
-      const y = Math.random() * (window.innerHeight - 50);
-
-      text.style.left = x + "px";
-      text.style.top = y + "px";
-
-      document.body.appendChild(text);
-
-      setTimeout(() => {
-        text.remove();
-      }, 3000);
-    }
-
-    function moveNo() {
-      const noBtn = document.getElementById("noBtn");
-      const yesBtn = document.getElementById("yesBtn");
+    if (noClickCount < 5) {
+      noClickCount++;
 
       const maxX = window.innerWidth - noBtn.offsetWidth - 20;
       const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
-      noBtn.style.left = Math.random() * maxX + "px";
-      noBtn.style.top = Math.random() * maxY + "px";
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
 
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+
+      // YES grows
       scale += 0.1;
       yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+    } else {
+      // Final form 😈
+      noBtn.innerText = "You thought NO was an option?? Never!!";
+      noBtn.style.left = "50%";
+      noBtn.style.top = "140px";
+      noBtn.style.transform = "translateX(-50%)";
     }
-  </script>
-
-</body>
-</html>
+  }
+</script>
